@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use terabyte\forum\widgets\LinkPager;
 use terabyte\forum\widgets\Editor;
 use terabyte\forum\widgets\Post;
+use terabyte\forum\assets\ForumAsset;
 
 /* @var \terabyte\forum\components\View $this */
 /* @var \yii\data\ActiveDataProvider $dataProvider */
@@ -18,11 +19,14 @@ $usernames = ArrayHelper::getColumn($users, 'username');
 $author = implode(', ', array_unique($usernames));
 
 $this->title = $topic->subject;
-$this->subtitle = 'вернуться в раздел <a href="' . Url::to(['/forum/default/view', 'id' => $topic->forum->id]) . '">' . $topic->forum->name . '</a>';
+$this->subtitle = 'вернуться в раздел <a href="' . Url::to(['/forum/view', 'id' => $topic->forum->id]) . '">' . $topic->forum->name . '</a>';
 $this->description = $topic->subject;
 $this->author = $author;
 
 $item['post_count'] = $dataProvider->pagination->offset;
+
+ForumAsset::register($this);
+
 ?>
 <div class="page-viewtopic">
     <div id="t<?= $topic->id ?>" class="topic-discussion">
@@ -38,7 +42,7 @@ $item['post_count'] = $dataProvider->pagination->offset;
     <?php if (!Yii::$app->getUser()->getIsGuest()): ?>
         <?= Editor::widget([
             'activeFormOptions' => [
-                'action' => Url::to(['/topic/default/view', 'id' => $topic->id, '#' => 'postform']),
+                'action' => Url::toRoute(['/forum/topic/view', 'id' => $topic->id, '#' => 'postform']),
             ],
             'model' => $model,
             'messageAttribute' => 'message',

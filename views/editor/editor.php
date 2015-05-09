@@ -43,7 +43,7 @@ $bundle = EditorAsset::register($this);
                 ])->textInput([
                     'placeholder' => 'Заголовок темы',
                 ])
-                ->label(\Yii::t('app/topic', 'Subject')) ?>
+                ->label(\Yii::t('forum', 'Subject')) ?>
         <?php endif; ?>
         <div class="editor-btn-panel">
             <div class="btn-group">

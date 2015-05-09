@@ -29,9 +29,9 @@ class PostForm extends \yii\base\Model
     {
         return [
             ['message', 'trim'],
-            ['message', 'required', 'message' => Yii::t('app/form', 'Required message')],
-            ['message', 'string', 'min' => 6, 'tooShort' => Yii::t('app/form', 'String short topic message')],
-            ['message', 'string', 'max' => 65534, 'tooLong' => Yii::t('app/form', 'String long topic message')],
+            ['message', 'required', 'message' => Yii::t('forum', 'Required message')],
+            ['message', 'string', 'min' => 6, 'tooShort' => Yii::t('forum', 'String short topic message')],
+            ['message', 'string', 'max' => 65534, 'tooLong' => Yii::t('forum', 'String long topic message')],
         ];
     }
 

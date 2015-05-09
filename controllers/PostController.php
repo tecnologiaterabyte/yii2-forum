@@ -61,7 +61,7 @@ class PostController extends \yii\web\Controller
 
         $model = new PostForm();
 
-        return $this->render('/default/view', [
+        return $this->render('/topic/view', [
             'dataProvider' => $dataProvider,
             'model' => $model,
             'topic' => $topic,

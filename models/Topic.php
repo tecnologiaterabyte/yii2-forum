@@ -31,6 +31,7 @@ use terabyte\forum\models\Post;
 class Topic extends \yii\db\ActiveRecord
 {
     /** @var \terabyte\forum\models\Post */
+
     private $_post;
     /**
      * @inheritdoc

@@ -7,7 +7,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use dektrium\user\models\User as BaseUser;
-use terabyte\forum\models\Post;
+
 
 /**
  * This is the model class for table "users".

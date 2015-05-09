@@ -8,7 +8,7 @@ use yii\db\ActiveQuery;
 use terabyte\forum\helpers\MarkdownParser;
 use terabyte\forum\models\Topic;
 use terabyte\forum\models\User;
-use notify\Module as NotifyModule;
+use terabyte\forum\modules\ModuleNotify as NotifyModule;
 
 
 /**

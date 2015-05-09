@@ -3,7 +3,6 @@
 namespace terabyte\forum\models;
 
 use Yii;
-use dektrium\user\models\User;
 
 /**
  * @property integer $user_ip

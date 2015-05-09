@@ -50,7 +50,7 @@ class Editor extends \yii\base\Widget
 
         $activeFormOptions = array_merge($this->activeFormOptions, $activeFormOptions);
 
-        echo $this->render('editor', [
+        echo $this->render('/editor/editor', [
             'user' => $user,
             'model' => $this->model,
             'messageAttribute' => $this->messageAttribute,

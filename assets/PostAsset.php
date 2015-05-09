@@ -7,7 +7,7 @@ class PostAsset extends \yii\web\AssetBundle
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@terabyte\forum\assets';
+    public $sourcePath = '@terabyte/forum/assets';
 
     /**
      * @inheritdoc

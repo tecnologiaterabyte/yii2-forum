@@ -7,7 +7,7 @@ class EditorAsset extends \yii\web\AssetBundle
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@terabyte\forum\assets';
+    public $sourcePath = '@terabyte/forum/assets';
 
     /**
      * @inheritdoc
@@ -27,8 +27,8 @@ class EditorAsset extends \yii\web\AssetBundle
     public $depends = [
         'yii\web\JqueryAsset',
         'yii\web\YiiAsset',
-        'editor\AtwhoAsset',
-        'editor\CaretAsset',
-        'editor\RangyInputsAsset',
+        'terabyte\forum\assets\AtwhoAsset',
+        'terabyte\forum\assets\CaretAsset',
+        'terabyte\forum\assets\RangyInputsAsset',
     ];
 }

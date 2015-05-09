@@ -31,9 +31,9 @@ $formatter = Yii::$app->formatter;
     <div class="post-container">
         <div class="post-content">
             <div class="post-header">
-                <span class="post-header-user"><a class="muted-link" href="<?= Url::toRoute(['/user/default/view', 'id' => $model->user_id])?>"><?= (isset($model->user->username)) ? $model->user->username : '' ?></a></span> написал
+                <span class="post-header-user"><a class="muted-link" href="<?= Url::toRoute(['/forum/user/view', 'id' => $model->user_id])?>"><?= (isset($model->user->username)) ? $model->user->username : '' ?></a></span> написал
                 <span class="post-header-time"><?= $formatter->asDatetime($model->created_at) ?></span>
-                <span class="post-header-count"><a class="muted-link" href="<?= Url::toRoute(['/topic/post/view', 'id' => $model->id, '#' => 'p' . $model->id]) ?>">#<?= $count ?></a></span>
+                <span class="post-header-count"><a class="muted-link" href="<?= Url::to(['/forum/post/view', 'id' => $model->id, '#' => 'p' . $model->id]) ?>">#<?= $count ?></a></span>
                     <?php if ($model->isTopicAuthor): ?>
                     <span class="post-header-owner">Автор</span>
                     <?php endif; ?>

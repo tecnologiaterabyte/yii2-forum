@@ -41,14 +41,14 @@ class TopicForm extends \yii\base\Model
     {
         return [
             ['subject', 'trim'],
-            ['subject', 'required', 'message' => Yii::t('app/form', 'Required topic subject')],
-            ['subject', 'string', 'min' => 6, 'tooShort' => Yii::t('app/form', 'String short topic subject')],
-            ['subject', 'string', 'max' => 255, 'tooLong' => Yii::t('app/form', 'String long topic subject')],
+            ['subject', 'required', 'message' => Yii::t('forum', 'Required topic subject')],
+            ['subject', 'string', 'min' => 6, 'tooShort' => Yii::t('forum', 'String short topic subject')],
+            ['subject', 'string', 'max' => 255, 'tooLong' => Yii::t('forum', 'String long topic subject')],
 
             ['message', 'trim'],
-            ['message', 'required', 'message' => Yii::t('app/form', 'Required message')],
-            ['message', 'string', 'min' => 6, 'tooShort' => Yii::t('app/form', 'String short topic message')],
-            ['message', 'string', 'max' => 65534, 'tooLong' => Yii::t('app/form', 'String long topic message')],
+            ['message', 'required', 'message' => Yii::t('forum', 'Required message')],
+            ['message', 'string', 'min' => 6, 'tooShort' => Yii::t('forum', 'String short topic message')],
+            ['message', 'string', 'max' => 65534, 'tooLong' => Yii::t('forum', 'String long topic message')],
         ];
     }
 

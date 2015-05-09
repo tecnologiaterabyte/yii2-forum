@@ -6,6 +6,7 @@ use yii\base\InvalidConfigException;
 use terabyte\forum\models\Post as PostModel;
 use terabyte\forum\models\Topic;
 use terabyte\forum\models\User;
+use terabyte\forum\assets\PostAsset;
 
 class Post extends \yii\base\Widget
 {
@@ -50,7 +51,7 @@ class Post extends \yii\base\Widget
      */
     public function run()
     {
-        echo $this->render('post', [
+        echo $this->render('/post/post', [
             'model' => $this->model,
             'count' => $this->count,
         ]);

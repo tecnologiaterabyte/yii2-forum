@@ -54,7 +54,7 @@ class TopicController extends \yii\web\Controller
 
             $model = new PostForm();
             if ($model->load(Yii::$app->getRequest()->post()) && $model->create($topic)) {
-                $this->redirect(['/topic/post/view', 'id' => $model->getPost()->id, '#' => 'p' . $model->getPost()->id]);
+                $this->redirect(['/forum/topic/view', 'id' => $model->getPost()->id, '#' => 'p' . $model->getPost()->id]);
             }
 
             return $this->render('view', [
@@ -90,7 +90,7 @@ class TopicController extends \yii\web\Controller
         $model = new TopicForm();
 
         if ($model->load(Yii::$app->getRequest()->post()) && $model->create($forum)) {
-            $this->redirect(['/topic/default/view', 'id' => $model->topic->id]);
+            $this->redirect(['/forum/topic/view', 'id' => $model->topic->id]);
         }
 
         return $this->render('create', [

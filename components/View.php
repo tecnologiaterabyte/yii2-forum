@@ -52,6 +52,6 @@ class View extends \yii\web\View
             return '';
         }
 
-        return ' (' . Yii::t('app/common', 'Page number', ['page' => $page]) . ')';
+        return ' (' . Yii::t('forum', 'Page number', ['page' => $page]) . ')';
     }
 }

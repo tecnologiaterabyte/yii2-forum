@@ -3,7 +3,7 @@
 namespace terabyte\forum\components;
 
 use Yii;
-use user\models\UserOnline;
+use terabyte\forum\models\UserOnline;
 
 class Module extends \yii\base\Module
 {

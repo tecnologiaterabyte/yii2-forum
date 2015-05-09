@@ -5,7 +5,6 @@ namespace terabyte\forum\models;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\behaviors\TimestampBehavior;
-use dektrium\user\models\User;
 
 /**
  * @property integer $id
