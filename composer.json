@@ -19,7 +19,7 @@
         "bower-asset/primer-css": "*",
         "bower-asset/jquery.atwho": "*",
         "bower-asset/rangyinputs": "*",
-        "2amigos/yii2-ckeditor-widget" : "~1.0"
+        "bower-asset/primer-markdown": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "~2.0",
