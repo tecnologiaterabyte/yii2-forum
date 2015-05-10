@@ -3,6 +3,7 @@
 namespace terabyte\forum\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * @property integer $user_ip
@@ -55,6 +56,10 @@ class UserOnline extends \yii\db\ActiveRecord
             ->where(['IN', 'id', $ids])
             ->asArray()
             ->all();
+
+        if (!ArrayHelper::keyExists('0', $users, false)) {
+            $users = [0 => ['id' => '0', 'username' => 'Ninguno',]];
+        }
 
         return $users;
     }

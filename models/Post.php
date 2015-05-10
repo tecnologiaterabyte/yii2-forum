@@ -38,7 +38,7 @@ class Post extends \yii\db\ActiveRecord
     {
         if ($this->isNewRecord) {
             $this->created_at = time();
-            $this->user_ip = ip2long(Yii::$app->getRequest()->getUserIP());
+            $this->user_ip = Yii::$app->getRequest()->getUserIP();
             $this->user_id = Yii::$app->getUser()->getIdentity()->getId();
 
             $currentUser = Yii::$app->getUser()->getIdentity();

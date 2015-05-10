@@ -13,6 +13,7 @@ namespace terabyte\forum;
 
 use yii;
 use yii\base\Module as BaseModule;
+use terabyte\forum\models\UserOnline;
 
 /**
  * This is the main module class for the Yii2-Forum.
@@ -42,6 +43,43 @@ class Module extends BaseModule
     public $urlRules = [
     ];
 
+    /**
+     * @inheritdoc
+     */
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            $ip = Yii::$app->getRequest()->getUserIP();
+
+            $userOnline = UserOnline::find()
+                ->where(['user_ip' => $ip])
+                ->one();
+
+            if (!$userOnline instanceof UserOnline) {
+                $userOnline = new UserOnline();
+            }
+
+            $userOnline->vizited_at = time();
+            $userOnline->user_ip = $ip;
+
+            if (!Yii::$app->getUser()->getIsGuest()) {
+                $userOnline->user_id = Yii::$app->getUser()->getIdentity()->getId();
+            } else {
+                $userOnline->user_id = 0;
+            }
+
+            $userOnline->save();
+            UserOnline::deleteInactiveUsers();
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();
