@@ -15,6 +15,7 @@
         "yiisoft/yii2-swiftmailer": "*",
         "dektrium/yii2-user": "dev-master",
         "erusev/parsedown": "*",
+        "erusev/parsedown-extra": "*",
         "cebe/yii2-gravatar": "*",
         "bower-asset/primer-css": "*",
         "bower-asset/jquery.atwho": "*",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "01ae244b776bce6ff02ca71d6a91e45e",
+    "hash": "6b59b7e19d1e60eeac6ae7e0cf629dd2",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -672,6 +672,50 @@
             "time": "2015-04-29 20:22:24"
         },
         {
+            "name": "erusev/parsedown-extra",
+            "version": "0.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown-extra.git",
+                "reference": "11a44e076d02ffcc4021713398a60cd73f78b6f5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown-extra/zipball/11a44e076d02ffcc4021713398a60cd73f78b6f5",
+                "reference": "11a44e076d02ffcc4021713398a60cd73f78b6f5",
+                "shasum": ""
+            },
+            "require": {
+                "erusev/parsedown": "~1.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ParsedownExtra": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "An extension of Parsedown that adds support for Markdown Extra.",
+            "homepage": "https://github.com/erusev/parsedown-extra",
+            "keywords": [
+                "markdown",
+                "markdown extra",
+                "parsedown",
+                "parser"
+            ],
+            "time": "2015-01-25 14:52:34"
+        },
+        {
             "name": "ezyang/htmlpurifier",
             "version": "v4.6.0",
             "source": {
@@ -773,12 +817,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "e587ae5d26786dfa69cf091e9df0587ee55bdfa9"
+                "reference": "c539abf848da2769a50efdcf04e2ca15a9cfa571"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/e587ae5d26786dfa69cf091e9df0587ee55bdfa9",
-                "reference": "e587ae5d26786dfa69cf091e9df0587ee55bdfa9",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/c539abf848da2769a50efdcf04e2ca15a9cfa571",
+                "reference": "c539abf848da2769a50efdcf04e2ca15a9cfa571",
                 "shasum": ""
             },
             "require": {
@@ -853,7 +897,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2015-05-08 20:38:49"
+            "time": "2015-05-09 22:31:43"
         },
         {
             "name": "yiisoft/yii2-authclient",

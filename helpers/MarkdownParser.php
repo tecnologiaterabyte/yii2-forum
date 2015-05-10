@@ -4,7 +4,7 @@ namespace terabyte\forum\helpers;
 
 use terabyte\forum\models\User;
 
-class MarkdownParser extends \Parsedown
+class MarkdownParser extends \ParsedownExtra
 {
     function __construct()
     {
