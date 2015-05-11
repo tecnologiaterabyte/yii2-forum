@@ -12,7 +12,7 @@ use terabyte\forum\models\Forum;
 use terabyte\forum\models\Post;
 use terabyte\forum\models\PostForm ;
 use terabyte\forum\models\Topic;
-use terabyte\forum\widgets\Editor;
+use terabyte\forum\widgets\EditorWidget;
 use terabyte\forum\widgets\LinkPager;
 use terabyte\forum\widgets\PostWidget;
 
@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php endforeach; ?>
         </div>
         <?php if (!Yii::$app->getUser()->getIsGuest()): ?>
-            <?= Editor::widget([
+            <?= EditorWidget::widget([
                 'activeFormOptions' => [
                     'action' => Url::to(['topic/view', 'id' => $topic->id, '#' => 'postform']),
                 ],
