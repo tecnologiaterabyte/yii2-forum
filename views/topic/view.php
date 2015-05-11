@@ -3,8 +3,9 @@
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\web\View;
+use terabyte\forum\components\View;
 use terabyte\forum\assets\ForumAsset;
 use terabyte\forum\controllers\ForumController;
 use terabyte\forum\models\Forum;
@@ -17,7 +18,6 @@ use terabyte\forum\widgets\PostWidget;
 
 
 /**
- * @var ForumController $control
  * @var View $this
  * @var ActiveDataProvider $dataProvider
  * @var ActiveRecord $posts
@@ -32,17 +32,22 @@ $usernames = ArrayHelper::getColumn($users, 'username');
 $author = implode(', ', array_unique($usernames));
 
 $this->title = $topic->subject;
+$this->subtitle = Yii::t('forum', 'вернуться в раздел') . Html::a($topic->forum->name, Url::to(['forum/view', 'id' => $topic->forum->id]));
+$this->description = $topic->subject;
+$this->author = $author;
 
 $item['post_count'] = $dataProvider->pagination->offset;
 
 ForumAsset::register($this);
 
-$this->title = Yii::t('forum', 'Post List');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('forum', 'Main Board'), 'url' => ['forum/index']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('forum', 'Topic List'), 'url' =>  Url::previous()];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('forum', $topic->forum->name), 'url' => ['forum/view', 'id' => $topic->forum->id]];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
+
+<?= terabyte\forum\widgets\pageHead::widget(['title' => $this->title, 'subtitle' => $this->subtitle]) ?>
+
     <div class="topic-view">
         <div id="t<?= $topic->id ?>" class="topic-discussion">
             <?php foreach($posts as $post): ?>
@@ -67,4 +72,5 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= LinkPager::widget(['pagination' => $dataProvider->pagination]) ?>
         </div>
     </div>
+
 <?php $this->registerJs("jQuery(document).post();") ?>

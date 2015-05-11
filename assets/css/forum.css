@@ -81,10 +81,9 @@
     line-height: 18px;
 }
 .question-tags a {
-    background-color: #f7f7f7;
-    border: 1px solid #e4edf4;
-    border-radius: 0;
-    color: #3e6d8e;
+    background-color: darkblue;
+    border-radius: 25px;
+    color: white;
     display: inline-block;
     font-size: 12px;
     line-height: 1;

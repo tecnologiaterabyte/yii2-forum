@@ -4,7 +4,7 @@ use \yii\db\ActiveRecord;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\web\View;
+use terabyte\forum\components\View;
 use terabyte\forum\assets\ForumAsset;
 use terabyte\forum\models\Forum;
 use terabyte\forum\models\Topic;
@@ -25,7 +25,6 @@ $item['topic_count'] = 0;
 
 ForumAsset::register($this);
 
-$this->title = Yii::t('forum', 'Topic List');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('forum', 'Main Board'), 'url' => ['forum/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -65,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= TopicPager::widget(['topic' => $topic]) ?>
                     </h3>
                     <div class="question-tags">
-                        <?= Html::a($forum->name, Url::remember(['forum/view', 'id' => $forum->id])) ?>
+                        <?= Html::a($forum->name, Url::to(['forum/view', 'id' => $forum->id])) ?>
                     </div>
                     <div class="question-author">
                         <?= ($topic->number_posts == 0) ? Yii::t('forum', 'вопрос задал') : Yii::t('forum', 'последним ответил') ?>

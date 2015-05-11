@@ -34,4 +34,5 @@ return [
     'вопрос задал' => 'Pregunta de',
     'Новости' => 'Noticias',
     'Автор' => 'Autor',
+    'вернуться в раздел' => 'Regresar a: '
 ];
