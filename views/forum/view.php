@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <?php if (!Yii::$app->getUser()->getIsGuest()): ?>
             <div class="question-list--topic-create">
-                <?= Html::a(Yii::t('forum', 'Create topic'), Url::to(['topic/create', 'id' => $forum->id]),  $options = ['class' => 'btn btn-sm btn-outline']) ?>
+                <?= Html::a(Yii::t('forum', 'Создать тему'), Url::to(['topic/create', 'id' => $forum->id]),  $options = ['class' => 'btn btn-sm btn-default']) ?>
             </div>
         <?php endif; ?>
     </div>

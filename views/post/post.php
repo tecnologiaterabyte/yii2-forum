@@ -4,12 +4,15 @@ use yii\helpers\Url;
 use yii\web\View;
 use cebe\gravatar\Gravatar;
 use yii\helpers\Html;
+use terabyte\forum\assets\ForumAsset;
 use terabyte\forum\models\Post;
 use terabyte\forum\models\Topic;
 
 /* @var View $this */
 /* @var Topic $topic */
 /* @var Post $model */
+
+ForumAsset::register($this);
 
 $formatter = Yii::$app->formatter;
 

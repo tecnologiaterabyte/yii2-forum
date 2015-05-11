@@ -90,7 +90,7 @@ class TopicController extends \yii\web\Controller
         $model = new TopicForm();
 
         if ($model->load(Yii::$app->getRequest()->post()) && $model->create($forum)) {
-            $this->redirect(['/forum/topic/view', 'id' => $model->topic->id]);
+            $this->redirect(['topic/view', 'id' => $model->topic->id]);
         }
 
         return $this->render('create', [

@@ -7,7 +7,7 @@ $formatter = Yii::$app->formatter;
 
 ?>
 <div class="<?= $options['class'] ?>">
-    <div class="container">
+    <div>
         <h1><?= $formatter->asText($title) ?></h1>
         <?php if (isset($subtitle)): ?>
             <p><?= $subtitle ?></p>

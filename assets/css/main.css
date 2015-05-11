@@ -427,6 +427,7 @@ dl.form > dd textarea {
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
   position: relative;
+  margin-left: 20px;
 }
 .post-header {
   background-color: #f7f7f7;
@@ -509,23 +510,23 @@ dl.form > dd textarea {
 
 
 
-.post-formbox {
+.post-form-box {
   padding-top: 20px;
 }
-.post-formbox-content {
+.post-form-box-content {
   border: 1px solid #ddd;
   border-radius: 3px;
-  margin-left: 60px;
+  margin-left: 80px;
   position: relative;
-  width: 890px;
+  width: auto;
 }
-.post-formbox-content .error-summary {
+.post-form-box-content .error-summary {
   margin: 10px 10px 0 10px;
 }
-.post-formbox-content .form-actions {
+.post-form-box-content .form-actions {
   padding: 10px;
 }
-.post-formbox-content .form-group {
+.post-form-box-content .form-group {
   margin: 0 10px;
 }
 .postform-create textarea {
@@ -536,13 +537,13 @@ dl.form > dd textarea {
   max-width: 100%;
   padding: 6px 10px;
 }
-.post-formbox-tabnav {
+.post-form-box-tabnav {
   background: #f7f7f7;
   border-radius: 3px 3px 0 0;
   margin-bottom: 10px;
   padding: 6px 10px 0;
 }
-.post-formbox-tabnav > nav > a {
+.post-form-box-tabnav > nav > a {
   font-size: 13px;
 }
 .field-topicform-subject {

@@ -12,6 +12,6 @@ class PrimerMarkdownAsset extends \yii\web\AssetBundle
      * @inheritdoc
      */
     public $css = [
-        'user-content.min.css',
+        'user-content.css',
     ];
 }

@@ -28,11 +28,16 @@ return [
     'Сейчас на форуме:' => 'Online:',
     'гостей:' => 'Invitado:',
     'пользователей:' => 'Miembros ',
-    'просмотров' => 'Mensajes',
+    'просмотров' => 'Vistas',
     'ответов' => 'Respuestas',
     'последним ответил' => 'Ultima Respuesta',
     'вопрос задал' => 'Pregunta de',
     'Новости' => 'Noticias',
     'Автор' => 'Autor',
-    'вернуться в раздел' => 'Regresar a: '
+    'вернуться в раздел' => 'Regresar a: ',
+    'в разделе' => 'Categoría',
+    'Title' => 'Titulo',
+    'Создать тему' => 'Crear Tema',
+    'Отправить' => 'Guardar',
+    'Напишите сообщение' => 'Escribir Mensaje',
 ];

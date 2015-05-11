@@ -19,6 +19,6 @@ class PrimerAsset extends \yii\web\AssetBundle
      */
     public $depends = [
         'terabyte\forum\assets\PrimerOcticonsAsset',
-        /*'terabyte\forum\assets\PrimerMarkdownAsset',*/
+        'terabyte\forum\assets\PrimerMarkdownAsset',
     ];
 }

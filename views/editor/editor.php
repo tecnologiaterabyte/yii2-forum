@@ -1,48 +1,55 @@
 <?php
+
 use cebe\gravatar\Gravatar;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use terabyte\forum\assets\ForumAsset;
+use terabyte\forum\components\View;
+use terabyte\forum\models\User;
+use terabyte\forum\models\PostForm;
 use terabyte\forum\widgets\ActiveForm;
-use terabyte\forum\assets\EditorAsset;
 
-/* @var \terabyte\forum\components\View $this */
-/* @var \terabyte\forum\models\User $user */
-/* @var \terabyte\forum\models\PostForm $model */
-/* @var string $titleAttribute */
-/* @var string $messageAttribute */
-/* @var array $activeFormOptions */
+/* @var View $this
+ * @var User $user
+ * @var PostForm $model
+ * @var string $titleAttribute
+ * @var string $messageAttribute
+ * @var array $activeFormOptions */
 
-$bundle = EditorAsset::register($this);
+ForumAsset::register($this);
 
 ?>
 
-<div class="post-formbox">
+<div class="post-form-box">
     <div class="post-avatar">
         <?php if ($user->email): ?>
-        <a href="<?= Url::toRoute(['/user/default/view', 'id' => $user->id])?>"><?= Gravatar::widget([
-            'email' => $user->email,
-            'options' => [
-                'alt' => $user->username,
-                'class' => 'avatar',
-                'width' => 48,
-                'height' => 48,
-            ],
-            'defaultImage' => 'retro',
-            'size' => 48
-        ]); ?></a>
+            <?= Gravatar::widget([
+                'email' => $user->email,
+                'options' => [
+                    'alt' => $user->username,
+                    'class' => 'avatar',
+                    'width' => 48,
+                    'height' => 48,
+                ],
+                'defaultImage' => 'retro',
+                'size' => 48
+            ]); ?>
         <?php endif; ?>
+        <div style = "text-align: center">
+            <?= Html::a($user->username, Url::toRoute(['/user/default/view', 'id' => $user->id])); ?>
+        </div>
     </div>
-    <div class="post-formbox-content clearfix">
+    <div class="post-form-box-content clearfix">
         <?php $form = ActiveForm::begin($activeFormOptions) ?>
         <?= $form->errorSummary($model, [
             'header' => '',
         ]) ?>
         <?php if ($titleAttribute):?>
             <?= $form->field($model, $titleAttribute, [
-            'template' => "{input}",
-                ])->textInput([
-                    'placeholder' => 'Заголовок темы',
-                ])
+                'template' => "{input}",
+            ])->textInput([
+                'placeholder' => Yii::t('forum', 'Напишите сообщение'),
+            ])
                 ->label(\Yii::t('forum', 'Subject')) ?>
         <?php endif; ?>
         <div class="editor-btn-panel">
@@ -58,7 +65,7 @@ $bundle = EditorAsset::register($this);
                 <button title="Вставка картинки" class="btn btn-sm js-btn-texticon-img" type="button"><span class="fa fa-picture-o"></span></button>
             </div>
             <div class="btn-group">
-                <button title="Список" class="btn btn-sm js-btn-texticon-bulleted" type="button"><spani class="fa fa-list"></spani></button>
+                <button title="Список" class="btn btn-sm js-btn-texticon-bulleted" type="button"><span class="fa fa-list"></span></button>
                 <button title="Нумерованный список" class="btn btn-sm js-btn-texticon-numbered" type="button"><span class="fa fa-list-ol"></span></button>
             </div>
             <div class="btn-group">
@@ -72,15 +79,15 @@ $bundle = EditorAsset::register($this);
         <?= $form->field($model, $messageAttribute, [
             'template' => "{input}",
         ])->textarea([
-            'placeholder' => 'Напишите сообщение',
+            'placeholder' => Yii::t('forum', 'Напишите сообщение'),
         ]) ?>
         <div class="editor-preview markdown-body"></div>
         <div class="editor-tips left">
-            <span class="fa fa-hand-o-right"></span> При оформлении сообщения Вы можете использовать разметку <strong><a target="_blank" class="muted-link" href="/markdown">markdown</a></strong>.<br />
+            <span class="fa fa-hand-o-right"></span> При оформлении сообщения Вы можете использовать разметку <strong><a target="_blank" class="muted-link" href="<?= Url::toRoute('/frontend/default/markdown') ?>">markdown</a></strong>.<br />
             <span class="fa fa-hand-o-right"></span> Для обращения к участнику дискуссии текущей темы введите <strong>@</strong> и выберите пользователя.
         </div>
         <div class="form-actions right">
-            <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton(Yii::t('forum', 'Отправить'), ['class' => 'btn btn-primary']) ?>
         </div>
         <?php ActiveForm::end() ?>
     </div>
