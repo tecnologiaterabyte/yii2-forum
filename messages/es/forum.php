@@ -17,6 +17,7 @@
  *
  * NOTE: this file must be saved in UTF-8 encoding.
  */
+
 return [
     'Количество пользователей:' => 'Número de Usuarios:',
     'Последним зарегистрировался:' => 'Ultimo Usuario Registrado:',
@@ -27,4 +28,9 @@ return [
     'Сейчас на форуме:' => 'Online:',
     'гостей:' => 'Invitado:',
     'пользователей:' => 'Miembros ',
+    'просмотров' => 'Mensajes',
+    'ответов' => 'Respuestas',
+    'последним ответил' => 'Ultima Respuesta',
+    'вопрос задал' => 'Pregunta de',
+    'Новости' => 'Noticias',
 ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend;
+namespace terabyte\forum\assets;
 
 class PrimerMarkdownAsset extends \yii\web\AssetBundle
 {

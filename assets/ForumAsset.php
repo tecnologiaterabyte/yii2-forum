@@ -17,6 +17,7 @@ class ForumAsset extends \yii\web\AssetBundle
     public $css = [
         'css/main.css',
         'css/dev.css',
+        'css/forum.css',
     ];
     /**
      * @inheritdoc
