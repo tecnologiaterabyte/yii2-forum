@@ -38,35 +38,35 @@ $this->params['breadcrumbs'][] = $this->title;
         <div id="category<?= $item['category_count'] ?>" class="columns">
             <table class="table table-hover">
                 <thead>
-                    <tr>
-                        <th class=""><?= $formatter->asText($category->name) ?></th>
-                        <th class="tens"><?= Yii::t('forum', 'Topics') ?></th>
-                        <th class="tens"><?= Yii::t('forum', 'Posts') ?></th>
-                        <th class="one-fourth"><?= Yii::t('forum', 'Last post') ?></th>
-                        <th class="tens"><?= Yii::t('forum', 'Autor') ?></th>
-                    </tr>
+                <tr>
+                    <th class=""><?= $formatter->asText($category->name) ?></th>
+                    <th class="tens"><?= Yii::t('forum', 'Topics') ?></th>
+                    <th class="tens"><?= Yii::t('forum', 'Posts') ?></th>
+                    <th class="one-fourth"><?= Yii::t('forum', 'Last post') ?></th>
+                    <th class="tens"><?= Yii::t('forum', 'Autor') ?></th>
+                </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($category->forums as $forum): ?>
-                        <?php $item['forum_count']++ ?>
-                        <tr class="<?= ($item['forum_count'] % 2 == 0) ? 'roweven' : 'rowodd' ?>">
-                            <td class="table-column-title">
-                                <?= Html::a($formatter->asText($forum->name), Url::to(['/forum/forum/view', 'id' => $forum->id])) ?>
-                            </td>
-                            <td><?= $formatter->asInteger($forum->number_topics) ?></td>
-                            <td><?= $formatter->asInteger($forum->number_posts) ?></td>
-                            <td>
-                                <?php if ($forum->last_post_created_at): ?>
-                                    <?= Html::a($formatter->asDatetime($forum->last_post_created_at), Url::to(['/forum/post/view', 'id' => $forum->last_post_user_id, '#' => 'p' . $forum->last_post_user_id])) ?>
-                                    <?php else: ?>
-                                        <?= $formatter->asDatetime($forum->last_post_created_at) ?>
-                                <?php endif; ?>
-                            </td>
-                            <td>
-                                <span class="byuser"> <?= $forum->last_post_username ?></span>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
+                <?php foreach($category->forums as $forum): ?>
+                    <?php $item['forum_count']++ ?>
+                    <tr class="<?= ($item['forum_count'] % 2 == 0) ? 'roweven' : 'rowodd' ?>">
+                        <td class="table-column-title">
+                            <?= Html::a($formatter->asText($forum->name), Url::to(['forum/view', 'id' => $forum->id])) ?>
+                        </td>
+                        <td><?= $formatter->asInteger($forum->number_topics) ?></td>
+                        <td><?= $formatter->asInteger($forum->number_posts) ?></td>
+                        <td>
+                            <?php if ($forum->last_post_created_at): ?>
+                                <?= Html::a($formatter->asDatetime($forum->last_post_created_at), Url::to(['post/view', 'id' => $forum->last_post_user_id, '#' => 'p' . $forum->last_post_user_id])) ?>
+                            <?php else: ?>
+                                <?= $formatter->asDatetime($forum->last_post_created_at) ?>
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <span class="byuser"> <?= $forum->last_post_username ?></span>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

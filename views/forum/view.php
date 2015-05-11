@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <?php if (!Yii::$app->getUser()->getIsGuest()): ?>
             <div class="question-list--topic-create">
-                <?= Html::a(Yii::t('forum', 'Create topic'), Url::to(['/forum/topic/create', 'id' => $forum->id]),  $options = ['class' => 'btn btn-sm btn-outline']) ?>
+                <?= Html::a(Yii::t('forum', 'Create topic'), Url::to(['topic/create', 'id' => $forum->id]),  $options = ['class' => 'btn btn-sm btn-outline']) ?>
             </div>
         <?php endif; ?>
     </div>
@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= TopicPager::widget(['topic' => $topic]) ?>
                     </h3>
                     <div class="question-tags">
-                        <?= Html::a($forum->name, Url::toRoute(['forum/view', 'id' => $forum->id])) ?>
+                        <?= Html::a($forum->name, Url::remember(['forum/view', 'id' => $forum->id])) ?>
                     </div>
                     <div class="question-author">
                         <?= ($topic->number_posts == 0) ? Yii::t('forum', 'вопрос задал') : Yii::t('forum', 'последним ответил') ?>

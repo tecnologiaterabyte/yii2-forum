@@ -33,4 +33,5 @@ return [
     'последним ответил' => 'Ultima Respuesta',
     'вопрос задал' => 'Pregunta de',
     'Новости' => 'Noticias',
+    'Автор' => 'Autor',
 ];

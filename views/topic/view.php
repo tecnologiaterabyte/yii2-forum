@@ -6,6 +6,8 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\View;
 use terabyte\forum\assets\ForumAsset;
+use terabyte\forum\controllers\ForumController;
+use terabyte\forum\models\Forum;
 use terabyte\forum\models\Post;
 use terabyte\forum\models\PostForm ;
 use terabyte\forum\models\Topic;
@@ -15,9 +17,11 @@ use terabyte\forum\widgets\PostWidget;
 
 
 /**
+ * @var ForumController $control
  * @var View $this
  * @var ActiveDataProvider $dataProvider
  * @var ActiveRecord $posts
+ * @var Forum $forum
  * @var Topic $topic
  * @var Post $post
  * @var PostForm $model
@@ -32,6 +36,11 @@ $this->title = $topic->subject;
 $item['post_count'] = $dataProvider->pagination->offset;
 
 ForumAsset::register($this);
+
+$this->title = Yii::t('forum', 'Post List');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('forum', 'Main Board'), 'url' => ['forum/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('forum', 'Topic List'), 'url' =>  Url::previous()];
+$this->params['breadcrumbs'][] = $this->title;
 
 ?>
     <div class="topic-view">
@@ -48,7 +57,7 @@ ForumAsset::register($this);
         <?php if (!Yii::$app->getUser()->getIsGuest()): ?>
             <?= Editor::widget([
                 'activeFormOptions' => [
-                    'action' => Url::toRoute(['/forum/topic/view', 'id' => $topic->id, '#' => 'postform']),
+                    'action' => Url::to(['topic/view', 'id' => $topic->id, '#' => 'postform']),
                 ],
                 'model' => $model,
                 'messageAttribute' => 'message',
