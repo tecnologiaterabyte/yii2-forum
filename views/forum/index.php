@@ -1,18 +1,22 @@
 <?php
 
+use \yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\View;
+use terabyte\forum\models\Category;
+use terabyte\forum\models\Forum;
+use terabyte\forum\assets\ForumAsset;
 use terabyte\forum\models\Post;
 use terabyte\forum\models\Topic;
 use terabyte\forum\models\UserOnline;
 use terabyte\forum\models\User;
-use terabyte\forum\assets\ForumAsset;
 
 /**
- * @var \terabyte\forum\components\View $this
- * @var \yii\db\ActiveRecord[] $categories
- * @var \terabyte\forum\models\Category $category
- * @var \terabyte\forum\models\Forum $forum
+ * @var View $this
+ * @var ActiveRecord $categories
+ * @var Category $category
+ * @var Forum $forum
  */
 
 ForumAsset::register($this);
@@ -24,10 +28,11 @@ $item = [
 
 $formatter = Yii::$app->formatter;
 
-$this->subtitle =  Yii::t('forum', 'вернуться в раздел');
+$this->title = Yii::t('forum', 'Main Board');
+$this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<div class="page-index">
+<div class="forum-index">
     <?php foreach($categories as $category): ?>
         <?php $item['category_count']++ ?>
         <div id="category<?= $item['category_count'] ?>" class="columns">
@@ -46,13 +51,13 @@ $this->subtitle =  Yii::t('forum', 'вернуться в раздел');
                         <?php $item['forum_count']++ ?>
                         <tr class="<?= ($item['forum_count'] % 2 == 0) ? 'roweven' : 'rowodd' ?>">
                             <td class="table-column-title">
-                                <?= Html::a($formatter->asText($forum->name),Url::to(['/forum/forum/view', 'id' => $forum->id])) ?>
+                                <?= Html::a($formatter->asText($forum->name), Url::to(['/forum/forum/view', 'id' => $forum->id])) ?>
                             </td>
                             <td><?= $formatter->asInteger($forum->number_topics) ?></td>
                             <td><?= $formatter->asInteger($forum->number_posts) ?></td>
                             <td>
                                 <?php if ($forum->last_post_created_at): ?>
-                                    <?= Html::a($formatter->asDatetime($forum->last_post_created_at),Url::to(['/forum/post/view', 'id' => $forum->last_post_user_id, '#' => 'p' . $forum->last_post_user_id])) ?>
+                                    <?= Html::a($formatter->asDatetime($forum->last_post_created_at), Url::to(['/forum/post/view', 'id' => $forum->last_post_user_id, '#' => 'p' . $forum->last_post_user_id])) ?>
                                     <?php else: ?>
                                         <?= $formatter->asDatetime($forum->last_post_created_at) ?>
                                 <?php endif; ?>
@@ -78,7 +83,7 @@ $this->subtitle =  Yii::t('forum', 'вернуться в раздел');
             </ul>
         </div>
         <div class="onlinelist">
-            <span><strong><?= Yii::t('forum', 'Сейчас на форуме:') ?> </strong> <?= UserOnline::countGuests() ?> <?= Yii::t('forum', 'гостей:') ?>, <?= UserOnline::countUsers() ?> <?= Yii::t('forum', 'пользователей:') ?>, <?= implode(', ', \yii\helpers\ArrayHelper::getColumn(UserOnline::getActiveUsers(), 'username')) ?></span>
+            <span><strong><?= Yii::t('forum', 'Сейчас на форуме:') ?> </strong><?= Yii::t('forum', 'гостей:') ?> <?= UserOnline::countGuests() ?> , <?= UserOnline::countUsers() ?> <?= Yii::t('forum', 'пользователей:') ?> - <?= implode(', ', \yii\helpers\ArrayHelper::getColumn(UserOnline::getActiveUsers(), 'username')) ?></span>
         </div>
     </div>
 </div>

@@ -8,7 +8,7 @@ use terabyte\forum\models\Topic;
 use terabyte\forum\models\User;
 use terabyte\forum\assets\PostAsset;
 
-class Post extends \yii\base\Widget
+class PostWidget extends \yii\base\Widget
 {
     /**
      * @var PostModel
