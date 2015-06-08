@@ -21,11 +21,13 @@ use yii\db\ActiveQuery;
  *
  * @property Category $category
  */
-class Forum extends \yii\db\ActiveRecord
+
+class SiteModels extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
+
     public static function tableName()
     {
         return '{{%forum}}';
@@ -34,17 +36,19 @@ class Forum extends \yii\db\ActiveRecord
     /**
      * @return ActiveQuery
      */
+
     public function getCategory()
     {
-        return $this->hasOne(Category::className(), ['id' => 'category_id']);
+        return $this->hasOne(CategoryModels::className(), ['id' => 'category_id']);
     }
 
     /**
      * @return ActiveQuery
      */
+
     public function getTopics()
     {
-        return $this->hasMany(Topic::className(), ['forum_id' => 'id'])
+        return $this->hasMany(TopicModels::className(), ['forum_id' => 'id'])
             ->inverseOf('forum');
     }
 }

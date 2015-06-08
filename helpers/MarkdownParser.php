@@ -2,7 +2,7 @@
 
 namespace terabyte\forum\helpers;
 
-use terabyte\forum\models\User;
+use terabyte\forum\models\UserModels;
 
 class MarkdownParser extends \ParsedownExtra
 {
@@ -44,9 +44,10 @@ class MarkdownParser extends \ParsedownExtra
     protected function inlineUserMention($Excerpt)
     {
         if (preg_match('/\B@([a-zA-Z][\w-]+)/', $Excerpt['context'], $matches)) {
-            /** @var User $user */
-            $user = User::findByUsername($matches[1]);
+            /** @var UserModels $user */
+            $user = UserModels::findByUsername($matches[1]);
             if ($user) {
+
                 return [
                     'extent' => strlen($matches[0]),
                     'element' => [
@@ -59,6 +60,7 @@ class MarkdownParser extends \ParsedownExtra
                     ],
                 ];
             } else {
+
                 return [
                     'markup' => $matches[0],
                     'extent' => strlen($matches[0]),

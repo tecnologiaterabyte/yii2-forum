@@ -6,8 +6,8 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
-use terabyte\forum\models\Post;
-use terabyte\forum\models\Topic;
+use terabyte\forum\models\PostModels;
+use terabyte\forum\models\TopicModels;
 
 class SearchController extends \yii\web\Controller
 {
@@ -15,7 +15,7 @@ class SearchController extends \yii\web\Controller
     {
         // !!! need access check
 
-        $query = Topic::find()
+        $query = TopicModels::find()
             ->where('forum_id NOT LIKE 0')
             ->with('forum')
             ->orderBy(['last_post_created_at' => SORT_DESC]);
@@ -42,7 +42,7 @@ class SearchController extends \yii\web\Controller
     {
         // !!! need access check
 
-        $query = Topic::find()
+        $query = TopicModels::find()
             ->where('number_posts = 0 AND forum_id NOT LIKE 0')
             ->with('forum')
             ->orderBy(['last_post_created_at' => SORT_DESC]);
@@ -75,7 +75,7 @@ class SearchController extends \yii\web\Controller
 
         $user = Yii::$app->getUser()->getIdentity();
 
-        $posts = Post::find()
+        $posts = PostModels::find()
             ->select(['topic_id', 'user_id'])
             ->where('user_id = :user_id', [':user_id' => $user->id])
             ->asArray()
@@ -84,7 +84,7 @@ class SearchController extends \yii\web\Controller
         $ids = ArrayHelper::getColumn($posts, 'topic_id');
         $uniqueIDs = array_unique($ids);
 
-        $query = Topic::find()
+        $query = TopicModels::find()
             ->where(['IN', 'id', $uniqueIDs])
             ->andWhere('forum_id NOT LIKE 0')
             ->with('forum')

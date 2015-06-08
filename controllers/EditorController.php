@@ -1,17 +1,22 @@
 <?php
 
-namespace editor\controllers;
+namespace terabyte\forum\controllers;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use terabyte\forum\models\Post;
 use yii\web\NotFoundHttpException;
+use terabyte\forum\models\PostModels;
+
+/**
+ * Class EditorController
+ */
 
 class EditorController extends \yii\web\Controller
 {
     /**
      * @return string
      */
+
     public function actionMention()
     {
         if (Yii::$app->getRequest()->getIsAjax()) {
@@ -19,7 +24,7 @@ class EditorController extends \yii\web\Controller
 
             $id = substr(Yii::$app->getRequest()->post('id'), 1);
 
-            $posts = Post::find()
+            $posts = PostModels::find()
                 ->with('user')
                 ->where(['topic_id' => $id])
                 ->asArray()

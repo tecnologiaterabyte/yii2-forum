@@ -19,13 +19,15 @@ use yii\behaviors\TimestampBehavior;
  * @property User $user
  * @property User $mentionUser
  */
+
 class UserMention extends \yii\db\ActiveRecord
 {
-    const MENTION_SATUS_UNVIEWED = 0;
-    const MENTION_SATUS_VIEWED = 1;
+    const MENTION_STATUS_UNVIEWED = 0;
+    const MENTION_STATUS_VIEWED = 1;
 
     public function behaviors()
     {
+
         return [
             [
                 'class' => TimestampBehavior::className(),
@@ -36,8 +38,10 @@ class UserMention extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
     public static function tableName()
     {
+
         return 'user_mention';
     }
 
@@ -46,7 +50,8 @@ class UserMention extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+
+        return $this->hasOne(UserModels::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -54,21 +59,35 @@ class UserMention extends \yii\db\ActiveRecord
      */
     public function getMentionUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'mention_user_id']);
+
+        return $this->hasOne(UserModels::className(), ['id' => 'mention_user_id']);
     }
 
     /**
      * @return ActiveQuery
      */
+
     public function getTopic()
     {
-        return $this->hasOne(Topic::className(), ['id' => 'topic_id']);
+
+        return $this->hasone(TopicModels::className(), ['id' => 'topic_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+
+    public function getPost()
+    {
+
+        return $this->hasone(PostModels::className(), ['id' => 'post_id']);
     }
 
     public static function countByUser($id)
     {
+
         return static::find()
-            ->where(['mention_user_id' => $id, 'status' => self::MENTION_SATUS_UNVIEWED])
+            ->where(['mention_user_id' => $id, 'status' => self::MENTION_STATUS_UNVIEWED])
             ->count();
     }
 }

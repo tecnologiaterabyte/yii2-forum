@@ -13,24 +13,31 @@ use yii\helpers\ArrayHelper;
 /**
  * Class Config
  */
+
 class Config extends \yii\base\Component
 {
     /**
      * @var Connection|array|string the DB connection object or the application component ID of the DB connection.
      */
+
     public $db = 'db';
+
     /**
      * @var string config table name.
      */
+
     public $configTable = '{{%config}}';
+
     /**
      * @var Cache|string the cache object or the application component ID of the cache object.
      */
+
     public $cache = 'cache';
 
     /**
      * @inheritdoc
      */
+
     public function init()
     {
         parent::init();
@@ -41,11 +48,12 @@ class Config extends \yii\base\Component
         }
     }
 
-    /**
+    /*
      * Returns configuration value.
      * @param string $name name of the key config data.
      * @return string value of configuration
      */
+
     public function get($name)
     {
         if ($this->cache instanceof Cache) {
@@ -69,6 +77,7 @@ class Config extends \yii\base\Component
      * Returns configuration data.
      * @return array
      */
+
     protected function getData()
     {
         $rows = (new Query)

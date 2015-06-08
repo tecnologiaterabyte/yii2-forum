@@ -1,76 +1,81 @@
 <?php
 
+use \yii\db\ActiveRecord;
 use yii\data\ActiveDataProvider;
-use yii\db\ActiveRecord;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use terabyte\forum\components\View;
 use terabyte\forum\assets\ForumAsset;
-use terabyte\forum\controllers\ForumController;
 use terabyte\forum\models\Forum;
-use terabyte\forum\models\Post;
-use terabyte\forum\models\PostForm ;
 use terabyte\forum\models\Topic;
-use terabyte\forum\widgets\EditorWidget;
 use terabyte\forum\widgets\LinkPager;
-use terabyte\forum\widgets\PostWidget;
-
+use terabyte\forum\widgets\TopicPager;
 
 /**
  * @var View $this
  * @var ActiveDataProvider $dataProvider
- * @var ActiveRecord $posts
+ * @var ActiveRecord $topics
  * @var Forum $forum
  * @var Topic $topic
- * @var Post $post
- * @var PostForm $model
  */
 
-$users = ArrayHelper::getColumn($posts, 'user');
-$usernames = ArrayHelper::getColumn($users, 'username');
-$author = implode(', ', array_unique($usernames));
-
-$this->title = $topic->subject;
-$this->subtitle = Yii::t('forum', 'вернуться в раздел') . Html::a($topic->forum->name, Url::to(['forum/view', 'id' => $topic->forum->id]));
-$this->description = $topic->subject;
-$this->author = $author;
-
-$item['post_count'] = $dataProvider->pagination->offset;
+$this->title = $forum->name;
+$formatter = Yii::$app->formatter;
+$item['topic_count'] = 0;
 
 ForumAsset::register($this);
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('forum', 'Main Board'), 'url' => ['forum/index']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('forum', $topic->forum->name), 'url' => ['forum/view', 'id' => $topic->forum->id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('forum', 'Main Board'), 'url' => ['site/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
-<?= terabyte\forum\widgets\pageHead::widget(['title' => $this->title, 'subtitle' => $this->subtitle]) ?>
-
-    <div class="topic-view">
-        <div id="t<?= $topic->id ?>" class="topic-discussion">
-            <?php foreach($posts as $post): ?>
-                <?php $item['post_count']++ ?>
-                <?= PostWidget::widget([
-                    'model' => $post,
-                    'topic' => $topic,
-                    'count' => $item['post_count'],
-                ]) ?>
-            <?php endforeach; ?>
+<div class="forum-view">
+    <div class="question-list-header">
+        <div class="question-list-title">
+            <h3><?= Yii::t('forum', 'Новости') . ': ' . $this->title ?></h3>
         </div>
         <?php if (!Yii::$app->getUser()->getIsGuest()): ?>
-            <?= EditorWidget::widget([
-                'activeFormOptions' => [
-                    'action' => Url::to(['topic/view', 'id' => $topic->id, '#' => 'postform']),
-                ],
-                'model' => $model,
-                'messageAttribute' => 'message',
-            ]) ?>
+            <div class="question-list--topic-create">
+                <?= Html::a(Yii::t('forum', 'Создать тему'), Url::to(['topic/create', 'id' => $forum->id]),  $options = ['class' => 'btn btn-sm btn-default']) ?>
+            </div>
         <?php endif; ?>
-        <div class="pagination-center">
-            <?= LinkPager::widget(['pagination' => $dataProvider->pagination]) ?>
-        </div>
     </div>
-
-<?php $this->registerJs("jQuery(document).post();") ?>
+    <div class="question-list">
+        <?php foreach ($topics as $topic): ?>
+            <div class="question-row<?= ($topic->sticked) ? ' question-row-sticked' : '' ?><?= ($topic->closed) ? ' question-row-closed' : '' ?>">
+                <div class="question-info">
+                    <div class="views">
+                        <div class="mini-counts">
+                            <span title="41 views"><?= Yii::$app->formatter->asInteger($topic->number_views) ?></span>
+                        </div>
+                        <div><?= Yii::t('forum', 'просмотров') ?></div>
+                    </div>
+                    <div class="answers <?= ($topic->number_posts == 0) ? '' : ' answered' ?>">
+                        <div class="mini-counts">
+                            <span title="2 answers"><?= Yii::$app->formatter->asInteger($topic->number_posts) ?></span>
+                        </div>
+                        <div><?= Yii::t('forum', 'ответов') ?></div>
+                    </div>
+                </div>
+                <div class="question-summary">
+                    <h3>
+                        <?= Html::a($formatter->asText($topic->subject), Url::toRoute(['post/view', 'id' => $topic->id])) ?>
+                        <?= TopicPager::widget(['topic' => $topic]) ?>
+                    </h3>
+                    <div class="question-tags">
+                        <?= Html::a($forum->name, Url::to(['forum/view', 'id' => $forum->id])) ?>
+                    </div>
+                    <div class="question-author">
+                        <?= ($topic->number_posts == 0) ? Yii::t('forum', 'вопрос задал') : Yii::t('forum', 'последним ответил') ?>
+                        <?= Html::a($formatter->asText($topic->last_post_username), '#') ?>
+                        <?= Html::a(Yii::$app->formatter->asDatetime($topic->last_post_created_at), '#', $options = ['class' => 'muted-link']) ?>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <div class="pagination-center">
+        <?= LinkPager::widget(['pagination' => $dataProvider->pagination]) ?>
+    </div>
+</div>

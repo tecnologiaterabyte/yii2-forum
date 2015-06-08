@@ -10,6 +10,7 @@ use Yii;
  * @property string $email
  * @property string $username
  */
+
 class FeedbackForm extends \yii\base\Model
 {
     /**
@@ -17,25 +18,32 @@ class FeedbackForm extends \yii\base\Model
      *
      * @var string
      */
+
     public $name;
+
     /**
      * Электроннная почта пользователя.
      *
      * @var string
      */
+
     public $email;
+
     /**
      * Текст сообщения.
      *
      * @var string
      */
+
     public $message;
 
     /**
      * @inheritdoc
      */
+
     public function rules()
     {
+
         return [
             ['name', 'filter', 'filter' => 'trim'],
             ['name', 'required', 'message' => 'Введите имя пользователя.'],

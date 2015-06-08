@@ -4,30 +4,31 @@ namespace terabyte\forum\models;
 
 use Yii;
 use terabyte\forum\helpers\MarkdownParser;
-use terabyte\forum\models\Forum;
-use terabyte\forum\models\Post;
-use terabyte\forum\models\User;
-use terabyte\forum\models\UserMention;
 
 /**
  * Class TopicForm
  *
  * @property Topic $topic
  */
+
 class TopicForm extends \yii\base\Model
 {
     /**
      * @var string
      */
+
     public $subject;
+
     /**
      * @var string
      */
+
     public $message;
 
     /**
      * @var Forum
      */
+
     public $forum;
     /**
      * @var Forum
@@ -37,8 +38,10 @@ class TopicForm extends \yii\base\Model
     /**
      * @inheritdoc
      */
+
     public function rules()
     {
+
         return [
             ['subject', 'trim'],
             ['subject', 'required', 'message' => Yii::t('forum', 'Required topic subject')],
@@ -53,9 +56,10 @@ class TopicForm extends \yii\base\Model
     }
 
     /**
-     * @param Forum $forum
+     * @param SiteModels $forum
      * @return boolean
      */
+
     public function create($forum)
     {
         // very, so much, stupid source code :)
@@ -63,14 +67,14 @@ class TopicForm extends \yii\base\Model
             $user = Yii::$app->getUser()->getIdentity();
 
             // create post
-            $post = new Post();
+            $post = new PostModels();
             $post->topic_id = 0;
             $post->message = $this->message;
             $post->save();
 
             if ($post->save()) {
                 // create topic
-                $topic = new Topic();
+                $topic = new TopicModels();
                 $topic->forum_id = $forum->id;
                 $topic->subject = $this->subject;
                 $topic->post = $post;
@@ -91,7 +95,5 @@ class TopicForm extends \yii\base\Model
                 return true;
             }
         }
-
-        return false;
     }
 }

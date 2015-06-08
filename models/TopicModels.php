@@ -4,8 +4,6 @@ namespace terabyte\forum\models;
 
 use Yii;
 use yii\db\ActiveQuery;
-use terabyte\forum\models\Forum;
-use terabyte\forum\models\Post;
 
 /**
  * @property integer $id
@@ -24,18 +22,21 @@ use terabyte\forum\models\Post;
  * @property integer $closed
  * @property integer $sticked
  *
- * @property \terabyte\forum\models\Post[] $posts
- * @property \terabyte\forum\models\Post $post
- * @property \terabyte\forum\models\Forum $forum
+ * @property Post[] $posts
+ * @property Post $post
+ * @property SiteModels $forum
  */
-class Topic extends \yii\db\ActiveRecord
+
+class TopicModels extends \yii\db\ActiveRecord
 {
     /** @var \terabyte\forum\models\Post */
 
     private $_post;
+
     /**
      * @inheritdoc
      */
+
     public function beforeSave($insert)
     {
         if ($this->isNewRecord) {
@@ -59,8 +60,10 @@ class Topic extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
     public static function tableName()
     {
+
         return '{{%topic}}';
     }
 
@@ -68,25 +71,31 @@ class Topic extends \yii\db\ActiveRecord
      * Counts all topics.
      * @return integer
      */
+
     public static function countAll()
     {
+
         return static::find()->count();
     }
 
     /**
      * @return ActiveQuery
      */
+
     public function getForum()
     {
-        return $this->hasOne(Forum::className(), ['id' => 'forum_id']);
+
+        return $this->hasOne(SiteModels::className(), ['id' => 'forum_id']);
     }
 
     /**
      * @return ActiveQuery
      */
+
     public function getPosts()
     {
-        return $this->hasMany(Post::className(), ['topic_id' => 'id'])
+
+        return $this->hasMany(PostModels::className(), ['topic_id' => 'id'])
             ->inverseOf('topic');
     }
 
@@ -94,6 +103,7 @@ class Topic extends \yii\db\ActiveRecord
      * @param Post $post
      * @return self
      */
+
     public function setPost($post)
     {
         $this->_post = $post;

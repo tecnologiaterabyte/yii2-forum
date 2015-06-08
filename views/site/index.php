@@ -5,18 +5,18 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
 use terabyte\forum\models\Category;
-use terabyte\forum\models\Forum;
+use terabyte\forum\models\SiteModels;
 use terabyte\forum\assets\ForumAsset;
-use terabyte\forum\models\Post;
-use terabyte\forum\models\Topic;
+use terabyte\forum\models\PostModels;
+use terabyte\forum\models\TopicModels;
 use terabyte\forum\models\UserOnline;
-use terabyte\forum\models\User;
+use terabyte\forum\models\UserModels;
 
 /**
  * @var View $this
  * @var ActiveRecord $categories
  * @var Category $category
- * @var Forum $forum
+ * @var SiteModels $forum
  */
 
 ForumAsset::register($this);
@@ -40,10 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                 <tr>
                     <th class=""><?= $formatter->asText($category->name) ?></th>
-                    <th class="tens"><?= Yii::t('forum', 'Topics') ?></th>
-                    <th class="tens"><?= Yii::t('forum', 'Posts') ?></th>
-                    <th class="one-fourth"><?= Yii::t('forum', 'Last post') ?></th>
-                    <th class="tens"><?= Yii::t('forum', 'Autor') ?></th>
+                    <th class="tens"><?= Yii::t('forum', 'Тем') ?></th>
+                    <th class="tens"><?= Yii::t('forum', 'Сообщений') ?></th>
+                    <th class="one-fourth"><?= Yii::t('forum', 'последнее Сообщений') ?></th>
+                    <th class="tens"><?= Yii::t('forum', 'Автор') ?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php $item['forum_count']++ ?>
                     <tr class="<?= ($item['forum_count'] % 2 == 0) ? 'roweven' : 'rowodd' ?>">
                         <td class="table-column-title">
-                            <?= Html::a($formatter->asText($forum->name), Url::to(['forum/view', 'id' => $forum->id])) ?>
+                            <?= Html::a($formatter->asText($forum->name), Url::to(['topic/view', 'id' => $forum->id])) ?>
                         </td>
                         <td><?= $formatter->asInteger($forum->number_topics) ?></td>
                         <td><?= $formatter->asInteger($forum->number_posts) ?></td>
@@ -74,11 +74,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="statistic">
         <div class="clearfix">
             <ul class="right">
-                <li><?= Yii::t('forum', 'Тем:') ?> <strong><?= $formatter->asInteger(Topic::countAll()) ?></strong></li>
-                <li><?= Yii::t('forum', 'Сообщений:') ?> <strong><?= $formatter->asInteger(Post::find()->count()) ?></strong></li>
+                <li><?= Yii::t('forum', 'Тем:') ?> <strong><?= $formatter->asInteger(TopicModels::countAll()) ?></strong></li>
+                <li><?= Yii::t('forum', 'Сообщений:') ?> <strong><?= $formatter->asInteger(PostModels::find()->count()) ?></strong></li>
             </ul>
             <ul class="left">
-                <li><?= Yii::t('forum', 'Количество пользователей:') ?> <strong><?= $formatter->asInteger(User::find()->count()) ?></strong></li>
+                <li><?= Yii::t('forum', 'Количество пользователей:') ?> <strong><?= $formatter->asInteger(UserModels::find()->count()) ?></strong></li>
                 <li><?= Yii::t('forum', 'Последним зарегистрировался:') ?> <?= Html::a('X','#') ?>
             </ul>
         </div>

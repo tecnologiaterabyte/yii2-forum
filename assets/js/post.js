@@ -51,7 +51,7 @@
             console.log(id);
 
             $.ajax({
-                url: '/post/update',
+                url: '/forum/post/update.html',
                 type: 'POST',
                 dataType: 'json',
                 data: {text: text, id: id},

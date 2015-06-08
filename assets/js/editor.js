@@ -70,7 +70,7 @@
                 $(document).on('ready', function(event) {
                     var id = $('.topic-discussion').attr('id');
                     $.ajax({
-                        url: '/editor/mention',
+                        url: '/forum/editor/mention.html',
                         type: 'POST',
                         dataType: 'json',
                         data: {id: id},

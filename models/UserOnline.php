@@ -10,13 +10,16 @@ use yii\helpers\ArrayHelper;
  * @property integer $user_id
  * @property integer $vizited_at
  */
+
 class UserOnline extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
+
     public static function tableName()
     {
+
         return '{{%user_online}}';
     }
 
@@ -29,6 +32,7 @@ class UserOnline extends \yii\db\ActiveRecord
 
     public static function countGuests()
     {
+
         return static::find()
             ->where('user_id = 0')
             ->count();
@@ -36,6 +40,7 @@ class UserOnline extends \yii\db\ActiveRecord
 
     public static function countUsers()
     {
+
         return static::find()
             ->where('user_id > 0')
             ->count();
@@ -51,7 +56,7 @@ class UserOnline extends \yii\db\ActiveRecord
 
         $ids = \yii\helpers\ArrayHelper::getColumn($array_ids, 'user_id');
 
-        $users = User::find()
+        $users = UserModels::find()
             ->select(['id', 'username'])
             ->where(['IN', 'id', $ids])
             ->asArray()

@@ -6,9 +6,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use terabyte\forum\helpers\MarkdownParser;
-use terabyte\forum\models\Topic;
-use terabyte\forum\models\User;
-use terabyte\forum\modules\ModuleNotify as NotifyModule;
+use terabyte\forum\Module as NotifyModule;
 
 
 /**
@@ -21,19 +19,23 @@ use terabyte\forum\modules\ModuleNotify as NotifyModule;
  * @property integer $edited_at
  * @property integer $edited_by
  *
- * @property \terabyte\forum\models\User $user
- * @property \terabyte\forum\models\Topic $topic
+ * @property UserModels $user
+ * @property TopicModels $topic
  * @property string $displayMessage
- * @property \yii\data\ActiveDataProvider $dataProvider
+ * @property ActiveDataProvider $dataProvider
  * @property boolean $isTopicAuthor
  */
-class Post extends \yii\db\ActiveRecord
+
+class PostModels extends \yii\db\ActiveRecord
 {
     private $_isTopicAuthor;
+
+    private $pageSize;
 
     /**
      * @inheritdoc
      */
+
     public function beforeSave($insert)
     {
         if ($this->isNewRecord) {
@@ -45,8 +47,6 @@ class Post extends \yii\db\ActiveRecord
             $currentUser->updateCounters(['number_posts' => 1]);
             $currentUser->last_posted_at = time();
             $currentUser->save();
-        } else {
-            
         }
 
         return parent::beforeSave($insert);
@@ -55,11 +55,14 @@ class Post extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
     public function afterSave($insert, $changedAttributes)
     {
         if ($this->topic_id > 0) {
+
             /** @var NotifyModule $notify */
-            $notify = Yii::$app->getModule('notify');
+
+            $notify = Yii::$app->getModule('forum');
             $notify->mentionHandler($this);
         }
 
@@ -69,32 +72,39 @@ class Post extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
     public static function tableName()
     {
+
         return '{{%post}}';
     }
 
     /**
      * @return ActiveQuery
      */
+
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id'])
+
+        return $this->hasOne(UserModels::className(), ['id' => 'user_id'])
             ->inverseOf('posts');
     }
 
     /**
      * @return ActiveQuery
      */
+
     public function getTopic()
     {
-        return $this->hasOne(Topic::className(), ['id' => 'topic_id']);
+
+        return $this->hasOne(TopicModels::className(), ['id' => 'topic_id']);
     }
 
     /**
      * @param $id
      * @return ActiveDataProvider
      */
+
     public static function getDataProviderByTopic($id)
     {
         $query = static::find()
@@ -114,6 +124,10 @@ class Post extends \yii\db\ActiveRecord
         return $dataProvider;
     }
 
+    /**
+     * @inheritdoc
+     */
+
     public function getIsTopicAuthor()
     {
         if (isset($this->_isTopicAuthor)) {
@@ -122,6 +136,10 @@ class Post extends \yii\db\ActiveRecord
 
         return false;
     }
+
+    /**
+     * @inheritdoc
+     */
 
     public function setIsTopicAuthor($value)
     {
@@ -133,10 +151,40 @@ class Post extends \yii\db\ActiveRecord
     /**
      * @return string
      */
+
     public function getDisplayMessage()
     {
         $parsedown = new MarkdownParser();
 
         return $parsedown->parse($this->message);
     }
+
+    /*
+    * Returns page number in topic by post.
+    * @param Post $post post model.
+    * @return integer
+    */
+
+    public function getPostPage($post)
+    {
+        $rows = PostModels::find()
+            ->select('id')
+            ->where(['topic_id' => $post->topic_id])
+            ->asArray()
+            ->all();
+
+        $index = 1;
+
+        foreach ($rows as $row) {
+            if ($row['id'] == $post->id) {
+                break;
+            }
+            $index++;
+        }
+
+        $page = ceil($index / Yii::$app->config->get('display_posts_count'));
+
+        return $page;
+    }
+
 }

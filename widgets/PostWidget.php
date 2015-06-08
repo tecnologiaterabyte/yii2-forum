@@ -3,9 +3,9 @@ namespace terabyte\forum\widgets;
 
 use Yii;
 use yii\base\InvalidConfigException;
-use terabyte\forum\models\Post as PostModel;
-use terabyte\forum\models\Topic;
-use terabyte\forum\models\User;
+use terabyte\forum\models\PostModels as PostModel;
+use terabyte\forum\models\TopicModels;
+use terabyte\forum\models\UserModels;
 use terabyte\forum\assets\PostAsset;
 
 class PostWidget extends \yii\base\Widget
@@ -15,7 +15,7 @@ class PostWidget extends \yii\base\Widget
      */
     public $model;
     /**
-     * @var Topic
+     * @var TopicModels
      */
     public $topic;
     /**
@@ -33,7 +33,7 @@ class PostWidget extends \yii\base\Widget
             throw new InvalidConfigException('The "model" property must be set.');
         }
 
-        if ($this->topic instanceof Topic && $this->model->user instanceof User) {
+        if ($this->topic instanceof TopicModels && $this->model->user instanceof UserModels) {
             if ($this->topic->first_post_user_id == $this->model->user->id) {
                 $this->model->setIsTopicAuthor(true);
             }
@@ -51,7 +51,7 @@ class PostWidget extends \yii\base\Widget
      */
     public function run()
     {
-        echo $this->render('/post/post', [
+        echo $this->render('post', [
             'model' => $this->model,
             'count' => $this->count,
         ]);

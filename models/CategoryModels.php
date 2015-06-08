@@ -10,9 +10,10 @@ use yii\db\ActiveQuery;
  * @property string $name
  * @property integer $display_position
  *
- * @property Forum[] $forums
+ * @property SiteModels $forums
  */
-class Category extends \yii\db\ActiveRecord
+
+class CategoryModels extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -27,7 +28,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getForums()
     {
-        return $this->hasMany(Forum::className(), ['category_id' => 'id'])
+        return $this->hasMany(SiteModels::className(), ['category_id' => 'id'])
             ->inverseOf('category');
     }
 }

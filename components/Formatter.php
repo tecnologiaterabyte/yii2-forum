@@ -9,6 +9,7 @@ class Formatter extends \yii\i18n\Formatter
     /**
      * @inheritdoc
      */
+
     public function init()
     {
         if (!Yii::$app->getUser()->getIsGuest()) {

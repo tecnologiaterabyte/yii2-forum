@@ -5,7 +5,8 @@ namespace terabyte\forum\widgets;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use terabyte\forum\models\Topic;
+use terabyte\forum\models\TopicModels;
+
 
 /**
  * Class TopicPager
@@ -13,9 +14,11 @@ use terabyte\forum\models\Topic;
 class TopicPager extends \yii\base\Widget
 {
     /**
-     * @var Topic $topic
+     * @var TopicModels $topic
      */
+
     public $topic;
+
     /**
      * @var integer the default page size.
      */
@@ -30,6 +33,7 @@ class TopicPager extends \yii\base\Widget
 
         if (!$this->pageSize) {
             $this->pageSize = Yii::$app->config->get('display_posts_count');
+            \yii::$app->session->set('debug', Yii::$app->config->get('display_posts_count'));
         }
 
         if ($numberPosts <= $this->pageSize) {
@@ -37,6 +41,7 @@ class TopicPager extends \yii\base\Widget
         }
 
         $pageCount = ceil($numberPosts / $this->pageSize);
+
         $items[] = Html::a('1', $this->generateLink());
 
         if ($pageCount > 5) {
@@ -62,9 +67,9 @@ class TopicPager extends \yii\base\Widget
     protected function generateLink($page = null)
     {
         if ($page) {
-            return Url::toRoute(['/topic/default/view', 'id' => $this->topic->id, 'page' => $page]);
+            return Url::toRoute(['post/view', 'id' => $this->topic->id, 'page' => $page]);
         } else {
-            return Url::toRoute(['/topic/default/view', 'id' => $this->topic->id]);
+            return Url::toRoute(['post/view', 'id' => $this->topic->id]);
         }
     }
 }

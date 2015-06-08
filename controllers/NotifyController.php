@@ -5,13 +5,13 @@ namespace terabyte\forum\controllers;
 use Yii;
 use yii\web\NotFoundHttpException;
 use terabyte\forum\helpers\MentionHelper;
-use terabyte\forum\models\Post;
-use terabyte\forum\models\User;
+use terabyte\forum\models\UserModels;
 use terabyte\forum\models\UserMention;
 
 /**
- * Class DefaultController
+ * Class NotifyController
  */
+
 class NotifyController extends \yii\web\Controller
 {
     public function actionView()
@@ -20,9 +20,14 @@ class NotifyController extends \yii\web\Controller
             $user = \Yii::$app->getUser()->getIdentity();
 
             $userMentions = UserMention::find()
-                ->with('topic')
+                ->with([
+                    'post'=> function ($query) {
+                        $query->andWhere(['status' => UserMention::MENTION_STATUS_UNVIEWED]);
+                    },
+                    'topic',
+                ])
                 ->where(['mention_user_id' => $user->id])
-                ->andWhere(['status' => UserMention::MENTION_SATUS_UNVIEWED])
+                ->andWhere(['status' => UserMention::MENTION_STATUS_UNVIEWED])
                 ->all();
 
             return $this->render('view', [
@@ -33,18 +38,22 @@ class NotifyController extends \yii\web\Controller
 
         throw new NotFoundHttpException();
     }
-    /**
-     * @param Post $post
+
+    /*
+     * @param PostModels $post
      * @return boolean
      */
+
     public function mentionHandler($post)
     {
         $usernames = MentionHelper::find($post->message);
         if (!empty($usernames)) {
             foreach ($usernames as $username) {
-                /** @var User $mentioned */
-                $mentioned = User::findByUsername($username);
-                if (!$mentioned instanceof User) {
+
+                /** @var UserModels $mentioned */
+
+                $mentioned = UserModels::findByUsername($username);
+                if (!$mentioned instanceof UserModels) {
                     continue;
                 }
 

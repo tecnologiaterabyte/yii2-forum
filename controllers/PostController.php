@@ -4,29 +4,29 @@ namespace terabyte\forum\controllers;
 
 use Yii;
 use yii\web\NotFoundHttpException;
-use terabyte\forum\models\Post;
+use terabyte\forum\models\PostModels;
 use terabyte\forum\models\PostForm;
-use terabyte\forum\models\Topic;
+use terabyte\forum\models\TopicModels;
 use terabyte\forum\models\UserMention;
 
 
 /**
  * Class PostController
  */
+
 class PostController extends \yii\web\Controller
 {
-    /**
-     * @param $id
+    /*
+     * @param $id topic identificator.
      * @return string
      */
+
     public function actionView($id)
     {
-        /** @var Post $post */
-        $post = Post::findOne(['id' => $id]);
+        /* @var TopicModels $topic */
 
-        /** @var Topic $topic */
-        $topic = Topic::find()
-            ->where(['id' => $post->topic_id])
+        $topic = TopicModels::find()
+            ->where(['id' => $id])
             ->with('forum')
             ->one();
 
@@ -36,62 +36,87 @@ class PostController extends \yii\web\Controller
 
         $topic->updateCounters(['number_views' => 1]);
         $topic->save();
+        $dataProvider = PostModels::getDataProviderByTopic($topic->id);
+        $posts = $dataProvider->getModels();
 
         if (!Yii::$app->getUser()->getIsGuest()) {
             $userMentions = UserMention::findAll([
-                'post_id' => $id,
+                'topic_id' => $id,
                 'mention_user_id' => Yii::$app->getUser()->getId(),
-                'status' => UserMention::MENTION_SATUS_UNVIEWED,
+                'status' => UserMention::MENTION_STATUS_UNVIEWED,
             ]);
 
+            /* user mention update */
             foreach ($userMentions as $userMention) {
-                $userMention->status = UserMention::MENTION_SATUS_VIEWED;
+                $userMention->status = UserMention::MENTION_STATUS_VIEWED;
                 $userMention->save();
             }
+
+            $model = new PostForm();
+
+            if ($model->load(Yii::$app->getRequest()->post()) && $model->create($topic)) {
+                $page = $model->post->getPostPage($model->post);
+                if ($page > 1) {
+                    $this->redirect([
+                        'view',
+                        'id' => $model->getPost()->topic->id,
+                        'page' => $page,
+                        '#' => 'p' . $model->getPost()->id
+                    ]);
+                } else {
+                        $this->redirect(['view', 'id' => $model->getPost()->topic->id, '#' => 'p' . $model->getPost()->id]);
+                }
+            }
+
+            return $this->render('view', [
+                'dataProvider' => $dataProvider,
+                'model' => $model,
+                'topic' => $topic,
+                'posts' => $posts,
+            ]);
+
+        } else {
+
+            return $this->render('view', [
+                'dataProvider' => $dataProvider,
+                'topic' => $topic,
+                'posts' => $posts,
+            ]);
         }
-
-        $dataProvider = Post::getDataProviderByTopic($topic->id);
-        $dataProvider->pagination->route = '/topic/default/view';
-        $dataProvider->pagination->params = [
-            'id' => $topic->id,
-            'page' => $this->getPostPage($post),
-        ];
-
-        $posts = $dataProvider->getModels();
-
-        $model = new PostForm();
-
-        return $this->render('/topic/view', [
-            'dataProvider' => $dataProvider,
-            'model' => $model,
-            'topic' => $topic,
-            'posts' => $posts,
-        ]);
     }
 
     /**
-     * Returns page number in topic by post.
-     * @param Post $post post model.
-     * @return integer
+     * @return string
      */
-    protected function getPostPage($post)
-    {
-        $rows = Post::find()
-            ->select('id')
-            ->where(['topic_id' => $post->topic_id])
-            ->asArray()
-            ->all();
 
-        $index = 1;
-        foreach ($rows as $row) {
-            if ($row['id'] == $post->id) {
-                break;
+    public function actionUpdate()
+    {
+        if (Yii::$app->getRequest()->getIsAjax()) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $text = Yii::$app->getRequest()->post('text');
+            $id = substr(Yii::$app->getRequest()->post('id'), 1);
+
+            /* @var PostModels $post */
+
+            $post = PostModels::findOne(['id' => $id]);
+
+            if (!$post || Yii::$app->getUser()->can('updatePost', ['post' => $post])) {
+                throw new NotFoundHttpException();
             }
-            $index++;
+
+            $model = new PostForm();
+            $model->message = $text;
+
+            if ($model->validate()) {
+                $post->message = $text;
+                $post->edited_at = time();
+                $post->edited_by = Yii::$app->getUser()->getIdentity()->getId();
+                $post->save();
+            }
+
+            return $post->displayMessage;
         }
 
-        $page = ceil($index / Yii::$app->config->get('display_posts_count'));
-
-        return $page;
+        throw new NotFoundHttpException();
     }
 }
